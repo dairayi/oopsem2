@@ -26,7 +26,9 @@ public class Class1 {
 
     public Class1(String filename) throws FileNotFoundException {
         this.filename=filename;
+    }
 
+    public void gathering_data(){
         int y = 0;
 
         String line;
@@ -35,130 +37,178 @@ public class Class1 {
 
         String delimiter = ",";
 
-            try {
-                File file = new File(filename);
-                FileReader fr = new FileReader(file);
-                BufferedReader br = new BufferedReader(fr);
-                //String line = "";
-                String[] tempArr;
-                while((line = br.readLine()) != null) {
-                    tempArr = line.split(delimiter);
-                    for(String tempStr : tempArr) {
-                        //System.out.print(tempStr + " ");
+        try {
+            File file = new File(filename);
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            //String line = "";
+            String[] tempArr;
+            while((line = br.readLine()) != null) {
+                tempArr = line.split(delimiter);
+                for(String tempStr : tempArr) {
+                    //System.out.print(tempStr + " ");
 
-                        //gender
-                        if(Objects.equals(tempStr, "Female")||Objects.equals(tempStr, "Male") && y==0){
+                    //gender
+                    if(Objects.equals(tempStr, "Female")||Objects.equals(tempStr, "Male") && y==0){
 
-                            if(Objects.equals(tempStr, "Female")){
-                                a1=a1+1;
-                            }
-                            else {
-                                a2=a2+1;
-                            }
-                            y=y+1;
+                        if(Objects.equals(tempStr, "Female")){
+                            a1=a1+1;
                         }
-                        else if(y==1) {
-
-                            if(Objects.equals(tempStr, "Yes")){
-                                a3=a3+1;
-                            }
-                            else {
-                                a4=a4+1;
-                            }
-                            y=y+1;
+                        else {
+                            a2=a2+1;
                         }
-                        else if(y==2){
-                            if(Objects.equals(tempStr, "Yes")){
-                                a5=a5+1;
-                            }
-                            else {
-                                a6=a6+1;
-                            }
-                            y=y+1;
-                        }
-                        //urban or rural
-                        else if(y==3){
-
-                            if(Objects.equals(tempStr, "Rural")){
-                                a7=a7+1;
-                            }
-                            else {
-                                a8=a8+1;
-                            }
-
-                            y=y+1;
-                        }
-                        //studies business
-                        else if(y==4){
-                            if(Objects.equals(tempStr, "Yes")){
-                                a9=a9+1;
-                            }
-                            else {
-                                a10=a10+1;
-                            }
-                            y=y+1;
-                        }
-                        else if(y==5){
-                            if(Objects.equals(tempStr, "Yes")){
-                                a11=a11+1;
-                            }
-                            else {
-                                a12=a12+1;
-                            }
-                            y=0;
-                        }
+                        y=y+1;
                     }
-                    //System.out.println();
-                }
-                br.close();
-            } catch(IOException ioe) {
-                ioe.printStackTrace();
-            }
+                    else if(y==1) {
 
-        System.out.println("gender\nfemale = "+a1+"\nmale = " +a2);
-            gender_total=a1+a2;
-        System.out.println("parent owned business\nyes = "+a3+"\nno = " +a4);
-            parent_total=a3+a4;
-        System.out.println("part-time job\nyes = "+a5+"\nno = " +a6);
-            parttime_total=a5+a6;
-        System.out.println("living\nrural = "+a7+"\nurban = " +a8);
-            urbanrural_total=a7+a8;
-        System.out.println("studies business\nyes = "+a9+"\nno = " +a10);
-            business_total=a9+a10;
-        System.out.println("entrepreneur\nyes = "+a11+"\nno = " +a12);
-            entrepreneur_total=a11+a12;
+                        if(Objects.equals(tempStr, "Yes")){
+                            a3=a3+1;
+                        }
+                        else {
+                            a4=a4+1;
+                        }
+                        y=y+1;
+                    }
+                    else if(y==2){
+                        if(Objects.equals(tempStr, "Yes")){
+                            a5=a5+1;
+                        }
+                        else {
+                            a6=a6+1;
+                        }
+                        y=y+1;
+                    }
+                    //urban or rural
+                    else if(y==3){
+
+                        if(Objects.equals(tempStr, "Rural")){
+                            a7=a7+1;
+                        }
+                        else {
+                            a8=a8+1;
+                        }
+
+                        y=y+1;
+                    }
+                    //studies business
+                    else if(y==4){
+                        if(Objects.equals(tempStr, "Yes")){
+                            a9=a9+1;
+                        }
+                        else {
+                            a10=a10+1;
+                        }
+                        y=y+1;
+                    }
+                    else if(y==5){
+                        if(Objects.equals(tempStr, "Yes")){
+                            a11=a11+1;
+                        }
+                        else {
+                            a12=a12+1;
+                        }
+                        y=0;
+                    }
+                }
+                //System.out.println();
+            }
+            br.close();
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
+
+        gender_total=a1+a2;
+        parent_total=a3+a4;
+        parttime_total=a5+a6;
+        urbanrural_total=a7+a8;
+        business_total=a9+a10;
+        entrepreneur_total=a11+a12;
+
+    }
+
+    public void test(String gender,String parent,String parttime,String living,String business){
+        float y;
+        float y1;
+        float y2;
+        float y3;
+        float y4;
+        float y5;
+        float x1;
+        float x2;
+        float x3;
+        float x4;
+        float x5;
+        float probability;
+        y = calc_probs();
+
+        if (Objects.equals(gender, "female")){
+            x1=a1/a11;
+            y1=a1/gender_total;
+        }
+        else{
+            x1=a2/a11;
+            y1=a2/gender_total;
+        }
+
+        if(Objects.equals(parent, "yes")){
+            x2=a3/a11;
+            y2=a3/parent_total;
+        }
+        else{
+            x2=a4/a11;
+            y2=a4/parent_total;
+        }
+
+        if(Objects.equals(parttime, "yes")){
+            x3=a5/a11;
+            y3=a5/parttime_total;
+        }
+        else{
+            x3=a6/a11;
+            y3=a6/parttime_total;
+        }
+
+        if(Objects.equals(living, "rural")){
+            x4=a7/a11;
+            y4=a7/urbanrural_total;
+        }
+        else{
+            x4=a8/a11;
+            y4=a8/urbanrural_total;
+        }
+
+        if(Objects.equals(business, "yes")){
+            x5=a9/a11;
+            y5=a9/business_total;
+        }
+        else{
+            x5=a10/a11;
+            y5=a10/business_total;
+        }
+
+        System.out.println((y1)+" "+(y2)+" "+(y3)+" "+(y4)+" "+(y5));
+        System.out.println((x1)+" "+(x2)+" "+(x3)+" "+(x4)+" "+(x5));
+
+        float x = ((x1)*(x2)*(x3)*(x4)*(x5));
+
+        float evidence = ((y1)*(y2)*(y3)*(y4)*(y5));
+
+        probability = ((x*y));
+
+        System.out.println("x="+x+"\ny="+y+"\nevidence = "+evidence+"\nyour probability based on selected parameters is: " + probability);
+
+
     }
 
 
-    public void calc_probs(){
-        float p_gender_f;//female probability
-        float p_gender_m;//male probability
-        //prior probabilities
-        //gender
-        //female
-        p_gender_f = a1/gender_total;
-        //male
-        p_gender_m = a2/gender_total;
-
-        float p_parent;//parent owned a business
-        p_parent=a3/parent_total;
-
-        float p_parttime;//student had a part time job probability
-        p_parttime=a5/parttime_total;
-
-        float p_urban;//urban living probability
-        float p_rural;//rural living probability
-        //urban
-        p_urban=a8/urbanrural_total;
-        //rural
-        p_rural=a7/urbanrural_total;
-
-        float p_business;//studies business
-        p_business=a9/business_total;
-
+    public float calc_probs(){
+        //p(y = become entrepreneur)
         float p_entrepreneur;//
         p_entrepreneur=a11/entrepreneur_total;
+
+        return p_entrepreneur;
 
     }
 
 }
+
