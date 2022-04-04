@@ -1,9 +1,12 @@
 package assignment1;
 
-public class Control {
-    public static void main(String[] args) {
+import java.io.FileNotFoundException;
 
-        ReadCSV r = new ReadCSV("MLdata.csv");
+public class Control {
+    public static void main(String[] args) throws FileNotFoundException {
+
+        Class1 r = new Class1("MLdata.csv");
+        System.out.println(r.calc_probs());
 
         //r.addnewdata();
         
