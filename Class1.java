@@ -1,28 +1,21 @@
 package assignment1;
 
 import java.io.*;
-import java.util.Objects;
+import java.util.*;
 
 public class Class1 {
+    public String[] gender = {};
+    public String[] parent = {};
+    public String[] part_time = {};
+    public String[] urban_rural = {};
+    public String[] business = {};
+    public String[] entrepreneur = {};
+
     public String filename;
-    public float a1 = 0;//gender//female
-    public float a2 = 0;//gender//male
-    public float gender_total;
-    public float a3 = 0;//parent business//yes
-    public float a4 = 0;//parent business//no
-    public float parent_total;
-    public float a5 = 0;//part-time job//yes
-    public float a6 = 0;//part-time job//no
-    public float parttime_total;
-    public float a7 = 0;//urban
-    public float a8 = 0;//rural
-    public float urbanrural_total;
-    public float a9 = 0;//studies business//yes
-    public float a10 =0;//studies business//no
-    public float business_total;
-    public float a11 =0;//become an entrepreneur//yes
-    public float a12 =0;//become an entrepreneur//no
-    public float entrepreneur_total;
+
+    public float train_prob;
+    public float train2_prob;
+    public int z=0;
 
     public Class1(String filename) throws FileNotFoundException {
         this.filename=filename;
@@ -41,7 +34,15 @@ public class Class1 {
             File file = new File(filename);
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            //String line = "";
+
+            ArrayList<String> arrayList1 = new ArrayList<>(Arrays.asList(gender));
+            ArrayList<String> arrayList2 = new ArrayList<>(Arrays.asList(parent));
+            ArrayList<String> arrayList3 = new ArrayList<>(Arrays.asList(part_time));
+            ArrayList<String> arrayList4 = new ArrayList<>(Arrays.asList(urban_rural));
+            ArrayList<String> arrayList5 = new ArrayList<>(Arrays.asList(business));
+            ArrayList<String> arrayList6 = new ArrayList<>(Arrays.asList(entrepreneur));
+
+
             String[] tempArr;
             while((line = br.readLine()) != null) {
                 tempArr = line.split(delimiter);
@@ -51,164 +52,95 @@ public class Class1 {
                     //gender
                     if(Objects.equals(tempStr, "Female")||Objects.equals(tempStr, "Male") && y==0){
 
-                        if(Objects.equals(tempStr, "Female")){
-                            a1=a1+1;
-                        }
-                        else {
-                            a2=a2+1;
-                        }
+                        arrayList1.add(tempStr);
+                        gender = arrayList1.toArray(gender);
+
                         y=y+1;
                     }
                     else if(y==1) {
 
-                        if(Objects.equals(tempStr, "Yes")){
-                            a3=a3+1;
-                        }
-                        else {
-                            a4=a4+1;
-                        }
+                        arrayList2.add(tempStr);
+                        parent = arrayList2.toArray(parent);
+
                         y=y+1;
                     }
                     else if(y==2){
-                        if(Objects.equals(tempStr, "Yes")){
-                            a5=a5+1;
-                        }
-                        else {
-                            a6=a6+1;
-                        }
+
+                        arrayList3.add(tempStr);
+                        part_time = arrayList3.toArray(part_time);
+
                         y=y+1;
                     }
                     //urban or rural
                     else if(y==3){
 
-                        if(Objects.equals(tempStr, "Rural")){
-                            a7=a7+1;
-                        }
-                        else {
-                            a8=a8+1;
-                        }
+                        arrayList4.add(tempStr);
+                        urban_rural = arrayList4.toArray(urban_rural);
 
                         y=y+1;
                     }
                     //studies business
                     else if(y==4){
-                        if(Objects.equals(tempStr, "Yes")){
-                            a9=a9+1;
-                        }
-                        else {
-                            a10=a10+1;
-                        }
+
+                        arrayList5.add(tempStr);
+                        business = arrayList5.toArray(business);
+
                         y=y+1;
                     }
                     else if(y==5){
-                        if(Objects.equals(tempStr, "Yes")){
-                            a11=a11+1;
-                        }
-                        else {
-                            a12=a12+1;
-                        }
+
+                        arrayList6.add(tempStr);
+                        entrepreneur = arrayList6.toArray(entrepreneur);
+
                         y=0;
                     }
                 }
-                //System.out.println();
             }
             br.close();
         } catch(IOException ioe) {
             ioe.printStackTrace();
         }
 
-        gender_total=a1+a2;
-        parent_total=a3+a4;
-        parttime_total=a5+a6;
-        urbanrural_total=a7+a8;
-        business_total=a9+a10;
-        entrepreneur_total=a11+a12;
+        System.out.println(Arrays.toString(gender));
+        System.out.println(Arrays.toString(parent));
+        System.out.println(Arrays.toString(part_time));
+        System.out.println(Arrays.toString(urban_rural));
+        System.out.println(Arrays.toString(business));
+        System.out.println(Arrays.toString(entrepreneur));
+        System.out.println(gender[5]);
 
     }
 
-    public void test(String gender,String parent,String parttime,String living,String business){
-        float y;
-        float y1;
-        float y2;
-        float y3;
-        float y4;
-        float y5;
-        float x1;
-        float x2;
-        float x3;
-        float x4;
-        float x5;
-        float probability;
-        y = calc_probs();
-
-        if (Objects.equals(gender, "female")){
-            x1=a1/a11;
-            y1=a1/gender_total;
-        }
-        else{
-            x1=a2/a11;
-            y1=a2/gender_total;
-        }
-
-        if(Objects.equals(parent, "yes")){
-            x2=a3/a11;
-            y2=a3/parent_total;
-        }
-        else{
-            x2=a4/a11;
-            y2=a4/parent_total;
-        }
-
-        if(Objects.equals(parttime, "yes")){
-            x3=a5/a11;
-            y3=a5/parttime_total;
-        }
-        else{
-            x3=a6/a11;
-            y3=a6/parttime_total;
-        }
-
-        if(Objects.equals(living, "rural")){
-            x4=a7/a11;
-            y4=a7/urbanrural_total;
-        }
-        else{
-            x4=a8/a11;
-            y4=a8/urbanrural_total;
-        }
-
-        if(Objects.equals(business, "yes")){
-            x5=a9/a11;
-            y5=a9/business_total;
-        }
-        else{
-            x5=a10/a11;
-            y5=a10/business_total;
-        }
-
-        System.out.println((y1)+" "+(y2)+" "+(y3)+" "+(y4)+" "+(y5));
-        System.out.println((x1)+" "+(x2)+" "+(x3)+" "+(x4)+" "+(x5));
-
-        float x = ((x1)*(x2)*(x3)*(x4)*(x5));
-
-        float evidence = ((y1)*(y2)*(y3)*(y4)*(y5));
-
-        probability = ((x*y));
-
-        System.out.println("x="+x+"\ny="+y+"\nevidence = "+evidence+"\nyour probability based on selected parameters is: " + probability);
+    public void calc_probs(){
+        
 
 
     }
 
 
-    public float calc_probs(){
-        //p(y = become entrepreneur)
-        float p_entrepreneur;//
-        p_entrepreneur=a11/entrepreneur_total;
+    public void run(String gender,String parent,String parttime,String living,String business){
 
-        return p_entrepreneur;
+
+    }
+/*
+    public void train(int train_perc){
+        String[] train_gender = {};
+
+        train_perc = gender.length;
+
+        Random r = new Random();
+
+
 
     }
 
+
+/*
+
+    public void test(){
+        System.out.println(Float.compare(train_prob, train2_prob));
+    }
+*/
 }
+
 
