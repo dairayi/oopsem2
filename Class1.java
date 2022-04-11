@@ -13,10 +13,6 @@ public class Class1 {
 
     public String filename;
 
-    public float train_prob;
-    public float train2_prob;
-    public int z=0;
-
     public Class1(String filename) throws FileNotFoundException {
         this.filename=filename;
     }
@@ -104,51 +100,82 @@ public class Class1 {
     }
 
     public void count(){
+        System.out.println(Arrays.toString(gender));
 
-        //countMap holds the count details of each element
-        Map<String, String> countgender = new HashMap<String, String>();
-        for (String key : gender) {
-            if (countgender.containsKey(key)) {
-                int count = Integer.parseInt(countgender.get(key));
-                count++;
-                countgender.put(key, String.valueOf(count));
-            } else {
-                countgender.put(key, String.valueOf(1));
+        //counts
+        int gender_female = 0;
+        int gender_male = 0;
+        int parent_yes = 0;
+        int parent_no = 0;
+        int parttime_yes = 0;
+        int parttime_no = 0;
+        int urbanrural_urban = 0;
+        int urbanrural_rural = 0;
+        int business_yes = 0;
+        int business_no = 0;
+        int entrepenuer_yes = 0;
+        int entrepenuer_no = 0;
+
+        for(String name : gender)
+        {
+            if(Objects.equals(name, "Female")){
+                gender_female=gender_female+1;
+            }
+            else{
+                gender_male=gender_male+1;
             }
         }
+        System.out.println("female = "+gender_female +"\nmale = "+ gender_male);
 
-        System.out.println(countgender);
-
-
-        Map<String, String> countparent = new HashMap<String, String>();
-        for (String key : parent) {
-            if (countparent.containsKey(key)) {
-                int count = Integer.parseInt(countparent.get(key));
-                count++;
-                countparent.put(key, String.valueOf(count));
-            } else {
-                countparent.put(key, String.valueOf(1));
+        for(String name : parent)
+        {
+            if(Objects.equals(name, "Yes")){
+                parent_yes=parent_yes+1;
+            }
+            else{
+                parent_no=parent_no+1;
             }
         }
+        System.out.println("\nparents\nyes = "+parent_yes +"\nno = "+ parent_no);
 
-        System.out.println(countparent);
-
-
-        Map<String, String> countpart_time = new HashMap<String, String>();
-        for (String key : part_time) {
-            if (countpart_time.containsKey(key)) {
-                int count = Integer.parseInt(countpart_time.get(key));
-                count++;
-                countpart_time.put(key, String.valueOf(count));
-            } else {
-                countpart_time.put(key, String.valueOf(1));
-            }
-        }
-
-        System.out.println(countpart_time.get("Yes"));
     }
 
-    public void calc_probs(){
+
+
+    public List random_num(float percent){
+        int maxRange;
+        int size = gender.length;
+
+        maxRange= (int) (size*(percent));
+        Random random = new Random();
+
+        return random.ints(0, size).distinct().limit(maxRange).boxed().toList();
+    }
+
+
+    public void train(float percent){
+
+        List nums = random_num(percent);
+
+        ArrayList<String> gender_train = new ArrayList<>();
+        ArrayList<String> parent_train = new ArrayList<>();
+        ArrayList<String> parttime_train = new ArrayList<>();
+        ArrayList<String> urbanrural_train = new ArrayList<>();
+        ArrayList<String> business_train = new ArrayList<>();
+        ArrayList<String> entrepreneur_train = new ArrayList<>();
+
+
+        //gets a percentage of the data
+        for(Object name : nums){
+            //System.out.println(gender[(int) name]);
+            gender_train.add(gender[(int) name]);
+            parent_train.add(parent[(int) name]);
+            parttime_train.add(part_time[(int) name]);
+            urbanrural_train.add(urban_rural[(int) name]);
+            business_train.add(business[(int) name]);
+
+            entrepreneur_train.add(entrepreneur[(int) name]);
+        }
 
 
 
@@ -242,4 +269,5 @@ public class Class1 {
     }
 */
 }
+
 
