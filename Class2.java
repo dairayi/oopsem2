@@ -4,18 +4,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.util.Objects;
 
 public class Class2 extends JFrame implements ActionListener{
+
+    public String gender;
+    public String parent;
+    public String part_time;
+    public String urban_rural;
+    public String business;
+    public String entrepreneur;
+
     JLabel label1,label2,label3,label4,label5;
-    JButton button1, button2,button3;
+    JButton button1, button2,button3,button4;
     JPanel panel1,panel2,panel3;
     Choice list1,list2,list3,list4,list5;
-    JTextField tf1,tf2;
+    JTextField tf1,tf2,tf3;
 
-    String filename;
+    public String filename;
 
-    float percentage;
+    public int percentage;
     // constructor - sets up the screen as it first appears when you
     // open it
 
@@ -25,11 +33,17 @@ public class Class2 extends JFrame implements ActionListener{
     {
 
         super(title);
-        setSize(300,300);
+        setSize(400,400);
         setLayout(new FlowLayout()); // sets the layout to a flowlayout
 
-        tf1 = new JTextField(20);
+        tf1 = new JTextField("MLdata.csv",20);
         tf2 = new JTextField(20);
+        tf3 = new JTextField(20);
+
+        tf1.setToolTipText("enter file name to gather data");
+        tf2.setToolTipText("enter percentage for training");
+        tf3.setEditable(false);
+
 
         label1 = new JLabel("gender");
         label2 = new JLabel("did your parents start a business");
@@ -37,9 +51,10 @@ public class Class2 extends JFrame implements ActionListener{
         label4 = new JLabel("rural or urban");
         label5 = new JLabel("do you study business");
 
-        button1 = new JButton("run");
+        button1 = new JButton("submit");
         button2 = new JButton("train");
         button3 = new JButton("test");
+        button4 = new JButton("run");
 
         list1 = new Choice();
         list1.add("Female");
@@ -84,11 +99,13 @@ public class Class2 extends JFrame implements ActionListener{
         panel2.add(button1);
         panel2.add(button2);
         panel2.add(button3);
+        panel2.add(button4);
 
         panel3.add(panel1);
         panel3.add(panel2);
         panel3.add(tf1);
         panel3.add(tf2);
+        panel3.add(tf3);
 
         add(panel1);
         add(panel2);
@@ -97,34 +114,93 @@ public class Class2 extends JFrame implements ActionListener{
         button1.addActionListener(this);
         button2.addActionListener(this);
         button3.addActionListener(this);
+        button4.addActionListener(this);
         tf1.addActionListener(this);
         tf2.addActionListener(this);
+        tf3.addActionListener(this);
 
         setVisible(true);
 
     }
 
+    public void list_select(){
+        if(Objects.equals(list1.getItem(list1.getSelectedIndex()), "Female")){
+            gender = list1.getItem(list1.getSelectedIndex());
+        }
+        else if(Objects.equals(list1.getItem(list1.getSelectedIndex()), "Male")){
+            gender = list1.getItem(list1.getSelectedIndex());
+        }
+
+        if(Objects.equals(list2.getItem(list2.getSelectedIndex()), "Yes")){
+            parent = list2.getItem(list2.getSelectedIndex());
+        }
+        else if(Objects.equals(list2.getItem(list2.getSelectedIndex()), "No")){
+            parent = list2.getItem(list2.getSelectedIndex());
+        }
+
+        if(Objects.equals(list3.getItem(list3.getSelectedIndex()), "Yes")){
+            part_time = list3.getItem(list3.getSelectedIndex());
+        }
+        else if(Objects.equals(list3.getItem(list3.getSelectedIndex()), "No")){
+            part_time = list3.getItem(list3.getSelectedIndex());
+        }
+
+        if(Objects.equals(list4.getItem(list4.getSelectedIndex()), "Urban")){
+            urban_rural = list4.getItem(list4.getSelectedIndex());
+        }
+        else if(Objects.equals(list4.getItem(list4.getSelectedIndex()), "Rural")){
+            urban_rural = list4.getItem(list4.getSelectedIndex());
+        }
+
+        if(Objects.equals(list5.getItem(list5.getSelectedIndex()), "Yes")){
+            entrepreneur = list5.getItem(list5.getSelectedIndex());
+        }
+        else if(Objects.equals(list5.getItem(list5.getSelectedIndex()), "No")){
+            entrepreneur = list5.getItem(list5.getSelectedIndex());
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent event)
     {
-        percentage = Float.parseFloat(tf1.getText());
-        filename = tf2.getText();
-        //Class1.train(Float.parseFloat(percentage));
-        List sum;
+        String chance;
+        String train;
+        float percentage;
 
         if(event.getSource() == button1){
-            JOptionPane.showMessageDialog(this,"run");
+            filename = tf1.getText();
+            Class1.gathering_data(filename);
+            JOptionPane.showMessageDialog(this,"data gathered");
+
         }
 
         else if(event.getSource() == button2){
 
             //JOptionPane.showMessageDialog(this, Class1.count());
-            Class1.gathering_data(filename);
-            sum = Class1.train(percentage);
+            this.percentage = Integer.parseInt(tf2.getText());
+            percentage = (float) this.percentage/100;
+            Class1.train(percentage);
 
-            JOptionPane.showMessageDialog(this,"train" + sum);
+            //JOptionPane.showMessageDialog(this,"train" + sum);
 
+        }
 
+        else if(event.getSource() == button3){
+
+            list_select();
+
+            train = Class1.test(gender,parent,part_time,urban_rural,business);
+
+            tf3.setText(train);
+        }
+
+        else if(event.getSource() == button4){
+
+            list_select();
+
+            chance = Class1.run(gender,parent,part_time,urban_rural,business);
+
+            tf3.setText(chance);
         }
 
     }
