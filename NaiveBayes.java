@@ -6,7 +6,7 @@ based on their attributes.
 
  */
 
-package assignment1;
+package Assignment1;
 
 import java.io.*;
 import java.util.*;
