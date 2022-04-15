@@ -6,7 +6,7 @@ Dairayi Mabika c20304181
 class for creating and displaying a gui for user input and output
  */
 
-package assignment1;
+package Assignment1;
 
 import javax.swing.*;
 import java.awt.*;
